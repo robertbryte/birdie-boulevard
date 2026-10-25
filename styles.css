@@ -109,7 +109,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .site-header.scrolled { background: rgba(7, 26, 16, .88); backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .6); }
 .header-inner { height: var(--header-h); display: flex; align-items: center; gap: 2rem; }
 .brand { display: flex; align-items: center; gap: .75rem; text-decoration: none; flex-shrink: 0; }
-.brand-mark { height: 36px; width: auto; box-shadow: 0 2px 8px rgba(0, 0, 0, .2); }
+.brand-mark { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--gold); box-shadow: 0 4px 14px rgba(0, 0, 0, .35); object-fit: cover; background: var(--cream); }
 .brand-word { font: 800 1.3rem/1 var(--font-head); color: var(--cream); letter-spacing: -.005em; }
 .brand-word em { color: var(--gold); font-style: italic; }
 .nav-desktop { display: none; margin-left: auto; gap: 2rem; }
