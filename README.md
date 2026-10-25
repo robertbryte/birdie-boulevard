@@ -1,61 +1,65 @@
-# Birdie Boulevard
+# Birdie Boulevard — Mobile Golf Simulator Rentals
+
+Static single-page marketing site. No build step: `index.html`, `styles.css`, `script.js`, and `assets/`.
+
+Live: https://birdie-boulevard.pages.dev/ (Cloudflare Pages)
 
 ## Asset manifest
 
-Optimized derivatives in `assets/` are used by the site; the supplied source PNGs remain untouched at the project root.
+Swap any asset by saving the new file **with the same filename** in `assets/`. That's it.
 
-| File | Status | Use / one-step replacement |
-|---|---|---|
-| `assets/logo-emblem.webp` | Ready | Full-color supplied emblem; replace with the same filename. |
-| `assets/logo-banner.webp` | Ready | Wide monochrome supplied logo for footer. |
-| `assets/logo-banner-small.webp` | Ready | Optimized header version. |
-| `assets/favicon.png` | Ready | Derived from supplied emblem. |
-| `assets/og-image.webp` | Ready | Temporary branded social card; replace with a 1200×630 image. |
-| `assets/hero-bg.mp4` | Future | Add an event background video; uncomment/wire a `<video>` in the hero. |
-| `assets/hero-poster.webp` | Future | Add a 1920×1080 event still and update the hero background/art. |
-| `assets/promo-video.mp4` | Future | Add a portrait 9:16 promo video and replace the action-section placeholder. |
-| `assets/promo-poster.webp` | Future | Add a 1080×1920 portrait poster for the promo video. |
-| `assets/showcase-wide.webp` | Future | Add a wide 3:2 or 16:9 lifestyle photo and replace the showcase placeholder. |
-| `assets/setup-standard.webp` | Future | Add a Standard configuration photo and replace its CSS bay diagram. |
-| `assets/setup-extended.webp` | Future | Add an Extended configuration photo and replace its CSS bay diagram. |
+| File | Size / format | Status | Used in |
+|---|---|---|---|
+| `logo-mark.webp` | 160×160 | ✅ From supplied `BBG Logo.png` (ball + flag) | Header badge |
+| `logo-banner.webp` | 1200×193, transparent | ✅ From supplied `BBG Banner Logo2_BW.png` (recolored cream) | Footer |
+| `logo-emblem.webp` / `logo-emblem-600.webp` | full emblem | ✅ From supplied `BBG Logo.png` | Final CTA |
+| `favicon-48.png`, `favicon-192.png`, `apple-touch-icon.png` | PNG | ✅ From supplied logo | Browser tab / home screen |
+| `og-image.jpg` | 1200×630 | ✅ Emblem on brand green | Social link previews |
+| `hero-bg.mp4` | 1920×1080, muted, ~10–20 s loop, < 8 MB | ⏳ **Needed** | Hero background (auto-plays once the file exists) |
+| `hero-poster.webp` | 1920×1080 | 🟡 Illustrated placeholder | Hero background / video poster |
+| `promo-video.mp4` | 1080×1920 (9:16) | ⏳ **Needed** | "See it in action" (play button appears once the file exists) |
+| `promo-poster.webp` | 1080×1920 (9:16) | 🟡 Illustrated placeholder | Promo video poster |
+| `showcase-wide.webp` | 1600×1000 (16:10) | 🟡 Illustrated placeholder | "Made for a crowd" section |
+| `setup-standard.webp` | 1200×750 (16:10) | 🟡 Dimension diagram (12′×9′×7′) | Standard configuration card |
+| `setup-extended.webp` | 1200×750 (16:10) | 🟡 Dimension diagram (12′×9′×20′) | Extended configuration card |
+| `product-1.webp` … `product-4.webp` | square | ⏳ Only if the Pro Shop is enabled | Pro Shop (disabled) |
 
-**Replacement:** export WebP/MP4 at the filename above, copy it into `assets/`, then replace the clearly labeled CSS placeholder block in `index.html` with an `<img>`/`<video>` using that path. No build step is required.
+Videos are only loaded when the file actually exists, so missing videos never show broken players.
 
-## Run locally
+## Confirmed vs. draft content
+
+**Confirmed (from the build spec):** company name; one enclosure with Standard 12′ W × 9′ H × 7′ D and Extended 12′ W × 9′ H × 20′ D configurations; SkyTrak ST+ launch monitor; 4K projector; packages 2 hr $550 / 4 hr $950 / 6 hr $1,200.
+
+**Draft — needs Robert's review** (marked `DRAFT` / `data-draft` / `data-placeholder` in `index.html`):
+
+- Operator, delivery/setup/teardown, clubs (incl. right/left-handed), courses, games, leaderboard — feature cards, package checklists, "Included with every package" band, FAQ
+- Package names (The Tee Time / The Front Nine / The Full Round) and one-line descriptions
+- Quote section info list: service area, availability ("7 days a week"), response time ("within 24 hours"), deposit
+- FAQ answers on players, reservations/deposit, and travel
+- Footer "Ready to play?" service-area line
+- Social links (currently `#`)
+
+## Open items
+
+1. **Service area / cities** — search `data-placeholder="service-area"`; also add the city to `<title>` and the meta description.
+2. **Deposit amount, additional-hour and extension pricing** — add-ons slot is commented in the Packages section.
+3. **Form destination** — set `data-endpoint="https://…"` on `#quote-form`, or replace the form with an embedded LeadConnector iframe (instructions in the HTML comment above the form). Until then the form validates but clearly says nothing was sent.
+4. **Pro Shop** — fully built but commented out; uncomment the section and its nav links, add product images and the store URL.
+5. **Photos and videos** — see the manifest above.
+6. **Custom domain** — update `canonical`, `og:url`, `og:image`, `twitter:image`, `robots.txt`, and `sitemap.xml`.
+
+## Local preview
 
 ```bash
-npm start
+python3 -m http.server 8080
+# open http://localhost:8080
 ```
 
-Railway can use the included `railway.json` and `npm start`; `PORT` is honored automatically.
-
-## Validate
+## Deploy
 
 ```bash
-npm test
+npx wrangler pages deploy <folder with index.html, styles.css, script.js, 404.html, robots.txt, sitemap.xml, _headers, assets/> \
+  --project-name birdie-boulevard --branch main
 ```
 
-The static validator checks HTML structure, local links/assets, fragment targets, required content, form preview safeguards, ignored Windows metadata, and setup/package facts.
-
-## Launch handoff — editable draft assumptions
-
-The following copy is deliberately labeled as draft or pending on-page and must be approved before launch:
-
-- Service area/cities, travel radius, mileage or travel fees
-- Deposit, reservation, availability, and response-time terms
-- Delivery, setup, teardown, and on-site operator scope
-- Club provision, including right/left-handed availability
-- Course library/software, game formats, competitions, and live leaderboard
-- Form destination (the current form is preview-only and never transmits data)
-- Venue suitability; enclosure dimensions are **not** minimum venue clearances
-- Canonical domain `birdieboulevard.com` (placeholder until domain is confirmed)
-- Social links (not published because destinations are unknown)
-
-Confirmed content used: company name, one enclosure with Standard 12′ × 9′ × 7′ and Extended 12′ × 9′ × 20′ configurations, SkyTrak ST+, 4K projector, and packages at 2 hours/$550, 4 hours/$950, and 6 hours/$1,200. The optional Pro Shop is disabled.
-
-## Structure
-
-- `index.html` — semantic single-page content
-- `styles.css` — responsive design, placeholders, reveal/no-JS states
-- `script.js` — mobile navigation, scroll progress/reveals, preview form behavior
-- `tests/validate.py` — dependency-free static validation
+The source logos and build spec at the repo root are not deployed.

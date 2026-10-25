@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://birdieboulevard.com/sitemap.xml
+Sitemap: https://birdie-boulevard.pages.dev/sitemap.xml
