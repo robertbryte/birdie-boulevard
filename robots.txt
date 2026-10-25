@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://birdie-boulevard.pages.dev/sitemap.xml
+Sitemap: https://birdieboulevardgolf.com/sitemap.xml
